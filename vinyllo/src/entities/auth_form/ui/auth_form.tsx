@@ -19,6 +19,8 @@ export type TFormProps = {
   handleChange: TChangeHandler;
   handleSubmit: TSubmitHandler;
   stopClick: boolean;
+  responsePending: boolean,
+  requestError: string
 };
 
 export const Form = ({
@@ -27,31 +29,35 @@ export const Form = ({
   handleChange,
   handleSubmit,
   stopClick,
+  responsePending,
+  requestError
 }: TFormProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
   function toggleShowPassword() {
     setShowPassword(!showPassword);
   }
   return (
+    <>
+    {responsePending && <div>Please, wait...</div>}
     <form>
       <Stack direction="row">
         <Stack direction="column">
           <AuthInput
-            label="Username"
+            label="Email"
             type={'text'}
-            name="username"
-            placeholder="John_Doe"
-            value={values.username || ''}
-            error={errors.username}
+            name="email"
+            placeholder="test@example.com"
+            value={values.email || ''}
+            error={errors.email}
             onChange={handleChange}
           />
-          {errors.username && <p>{errors.username}</p>}
+          {errors.email && <p>{errors.email}</p>}
           <AuthInput
             label="Password"
             type={showPassword ? 'text' : 'password'}
-            name="userpassword"
-            value={values.userpassword || ''}
-            error={errors.userpassword}
+            name="password"
+            value={values.password || ''}
+            error={errors.password}
             onChange={handleChange}
           >
             <VisibilityCheckBox
@@ -59,7 +65,7 @@ export const Form = ({
               onClick={toggleShowPassword}
             />
           </AuthInput>
-          {errors.userpassword && <p>{errors.userpassword}</p>}
+          {errors.password && <p>{errors.password}</p>}
         </Stack>
       </Stack>
 
@@ -84,5 +90,6 @@ export const Form = ({
         />
       </Stack>
     </form>
+    </>
   );
 };
