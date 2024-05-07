@@ -1,4 +1,6 @@
 import { useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { loginUser, registerUser } from '../../../../app/store/user_slice';
 
 export type TChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 export type TSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -8,18 +10,16 @@ export type TValidation = (
   arg2: string,
 ) => void;
 export type TFormSetData = React.Dispatch<React.SetStateAction<object>>;
-export type TValueObj = { username?: string; userpassword?: string };
-export type TErrObj = { username?: string; userpassword?: string };
+export type TValueObj = { email?: string; password?: string };
+export type TErrObj = { email?: string; password?: string };
 export type TStateValues = [values: TValueObj, setValues: TFormSetData];
 export type TStateErrors = [errors: TErrObj, setErrors: TFormSetData];
 
-const useForm = (
-  signInCallback: TFormSetData,
-  signUpCallback: TFormSetData,
-) => {
+const useForm = () => {
   const [values, setValues]: TStateValues = useState({});
   const [errors, setErrors]: TStateErrors = useState({});
   const [submitError, setSubmitError] = useState('');
+  // const dispatch: any = useDispatch();
 
   const handleChange: TChangeHandler = (e) => {
     e.preventDefault();
@@ -37,47 +37,33 @@ const useForm = (
 
   const validate: TValidation = (e, name, value) => {
     switch (name) {
-      case 'username':
-        if (value.length < 4) {
+      case 'email':
+        if (!new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).test(value)) {
           setErrors({
             ...errors,
-            username: 'Username should have at least 4 characters',
-          });
-          return;
-        }
-        if (value.includes(' ')) {
-          setErrors({
-            ...errors,
-            username: 'Username should not include spaces',
-          });
-          return;
-        }
-        if (!new RegExp('^[a-zA-Z0-9_-]*$').test(value)) {
-          setErrors({
-            ...errors,
-            username:
-              'Username should only contain latin characters, numbers and "-","_" symbols',
+            email:
+              'Enter valid user email',
           });
           return;
         } else {
           let newObj: TErrObj = { ...errors };
-          delete newObj.username;
+          delete newObj.email;
           setErrors(newObj);
         }
         break;
-      case 'userpassword':
+      case 'password':
         if (
           !new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(value)
         ) {
           setErrors({
             ...errors,
-            userpassword:
+            password:
               'Password should contain atleast 8 charaters, 1 uppercased letter and numbers',
           });
           return;
         } else {
           let newObj: TErrObj = { ...errors };
-          delete newObj.userpassword;
+          delete newObj.password;
           setErrors(newObj);
         }
         break;
@@ -86,30 +72,33 @@ const useForm = (
     }
   };
 
-  const handleSubmit: TSubmitHandler = (e) => {
-    e.preventDefault();
-    if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
-      setSubmitError('');
-      const authData = { ...values };
-      e.currentTarget.name === 'signUp' && signUpCallback(authData);
-      e.currentTarget.name === 'signIn' && signInCallback(authData);
-      resetForm();
-    } else {
-      setSubmitError('Please fill all the fields correctly to continue');
-    }
-  };
+  // const handleSubmit: TSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
+  //     setSubmitError('');
+  //     const userCredentials = { ...values, albums:[], favorites:[]};
+  //     e.currentTarget.name === 'signUp' && dispatch(registerUser(userCredentials));
+  //     e.currentTarget.name === 'signIn' && dispatch(loginUser(userCredentials));
+  //     resetForm();
+  //   } else {
+  //     setSubmitError('Please fill all the fields correctly to continue');
+  //   }
+  // };
 
-  const resetForm = () => {
-    setValues({});
-    setErrors({});
-  };
+  // const resetForm = () => {
+  //   setValues({});
+  //   setErrors({});
+  // };
 
   return {
     values,
+    setValues,
     errors,
+    setErrors,
+    setSubmitError,
     submitError,
     handleChange,
-    handleSubmit,
+    // handleSubmit,
   };
 };
 
