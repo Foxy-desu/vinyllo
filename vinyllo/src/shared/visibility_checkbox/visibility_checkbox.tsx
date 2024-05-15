@@ -1,11 +1,12 @@
+import React from 'react';
 import { Checkbox } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-type TVCBProps = { showPassword: boolean; onClick: () => void };
-type TVCB = (props: TVCBProps) => JSX.Element;
+export type TVCBProps = { showPassword: boolean; onClick: () => void };
+export type TVCB = (props: TVCBProps) => JSX.Element;
 
-export const VisibilityCheckBox: TVCB = ({ showPassword, onClick }) => {
+const VisibilityCheckBox: TVCB = ({ showPassword, onClick }) => {
   return (
     <Checkbox
       size="small"
@@ -16,3 +17,5 @@ export const VisibilityCheckBox: TVCB = ({ showPassword, onClick }) => {
     />
   );
 };
+
+export  default VisibilityCheckBox;
