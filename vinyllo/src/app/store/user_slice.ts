@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//TODO asynk thunk for login and register
+//TODO create reducer to remove data about user from store
 export const loginUser: any = createAsyncThunk(
     'login',
     async(userCredentials)=> {
@@ -31,7 +31,9 @@ const userSlice = createSlice({
         user: null,
         error: null,
     },
-    reducers: {},
+    reducers: {
+
+    },
     extraReducers: (builder)=>{
         builder
         .addCase(loginUser.pending, (state)=> {
@@ -49,6 +51,9 @@ const userSlice = createSlice({
             state.user = null;
             if(action.error.message === 'Request failed with status code 401') {
                 state.error = 'Access denied. Please enter valid user credentials' as any;
+            }
+            if(action.error.message === 'Request failed with status code 400') {
+                state.error = 'Please, check if all credentials are correct and retry' as any;
             }
             else {
                 state.error = action.error.message as any;
@@ -69,6 +74,9 @@ const userSlice = createSlice({
             state.user = null;
             if(action.error.message === 'Request failed with status code 401') {
                 state.error = 'Access denied. Please enter valid user credentials' as any;
+            }
+            if(action.error.message === 'Request failed with status code 400') {
+                state.error = 'User already exists' as any;
             }
             else {
                 state.error = action.error.message as any;
