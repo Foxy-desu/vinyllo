@@ -6,35 +6,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { TSubmitHandler } from "./use_form";
 import { createUserObjOnLogin, createUserObjOnReg } from "../helpers/user_object_creators";
 import { loginUser, registerUser } from "../../../../app/store/user_slice";
-import { resetForm } from "../helpers/reset_form";
+import { resetForm } from "../../api";
 import { TFormSetData } from "../../ui/auth_form";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export type TUseSubmitProps = {errors: object, setErrors: TFormSetData, values: object, setValues: TFormSetData};
 
 const useSubmit = ({values, setValues, errors, setErrors}:TUseSubmitProps) => {
 
-    const [stopClick, setStopClick] = React.useState(false);
+    const [stopClick, setStopClick] = React.useState(true);
     const {loading, error} = useSelector((state: any)=> state.user);
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+
     const signUp = () => {
         const userCredentials = createUserObjOnReg(values);
-        dispatch(registerUser(userCredentials)).then((result:any)=> {
-            console.log(result.payload, result);
-            if(result.payload) {
-                // navigate("/");
-            }
-        });
+        dispatch(registerUser(userCredentials));
     };
     const signIn = () => {
         const userCredentials = createUserObjOnLogin(values);
-        dispatch(loginUser(userCredentials)).then((result:any)=> {
-            console.log(result.payload, result);
-            if(result.payload) {
-                // navigate("/");
-            }
-        });
+        dispatch(loginUser(userCredentials));
     };
     const handleSubmit: TSubmitHandler = (e) => {
         e.preventDefault();
@@ -43,7 +33,7 @@ const useSubmit = ({values, setValues, errors, setErrors}:TUseSubmitProps) => {
         if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
             e.currentTarget.name === 'signUp' && signUp();
             e.currentTarget.name === 'signIn' && signIn();
-            resetForm(setValues, setErrors);
+            error || resetForm(setValues, setErrors);
         }
     };
     
