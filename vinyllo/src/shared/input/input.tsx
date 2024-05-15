@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 
-type TInputProps = {
+export type TInputProps = {
   type: string;
   name: string;
   placeholder?: string;

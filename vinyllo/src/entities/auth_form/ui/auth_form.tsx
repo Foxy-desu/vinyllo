@@ -1,14 +1,15 @@
 import React from 'react';
 import AuthInput from '../../../shared/input/input';
-import { AuthButton } from '../../../shared/button/button';
+import { AuthButton } from '../../../shared/api';
 import { Stack } from '@mui/material';
-import { VisibilityCheckBox } from '../../../shared/visibility_checkbox/visibility_checkbox';
+import { VisibilityCheckBox } from '../../../shared/api';
 import {
   TChangeHandler,
   TErrObj,
   TSubmitHandler,
   TValueObj,
-} from '../utils/hooks/use_form';
+} from '../api';
+import { useNavigate } from 'react-router-dom';
 
 export type TFormSetData = React.Dispatch<React.SetStateAction<object>>;
 export type TFormProps = {
@@ -20,17 +21,17 @@ export type TFormProps = {
   handleSubmit: TSubmitHandler;
   stopClick: boolean;
   responsePending: boolean,
-  requestError: string
+  submitError: any;
 };
 
-export const Form = ({
+const Form = ({
   values,
   errors,
   handleChange,
   handleSubmit,
   stopClick,
   responsePending,
-  requestError
+  submitError,
 }: TFormProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
   function toggleShowPassword() {
@@ -89,7 +90,10 @@ export const Form = ({
           prohibitClick={stopClick}
         />
       </Stack>
+      {submitError && <p>{submitError}</p>}
     </form>
     </>
   );
 };
+
+export default Form;

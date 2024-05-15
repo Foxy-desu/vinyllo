@@ -1,16 +1,17 @@
+import React from 'react';
 import { Button } from '@mui/material';
 import { TSubmitHandler } from '../../entities/auth_form/utils/hooks/use_form';
 
-type TAuthBtnProps = {
+export type TAuthBtnProps = {
   type?: 'button' | 'submit' | 'reset' | undefined;
   value?: string;
   name?: string;
   onClick?: TSubmitHandler;
   prohibitClick?: true | false;
 };
-type TAuthButton = (props: TAuthBtnProps) => JSX.Element;
+export type TAuthButton = (props: TAuthBtnProps) => JSX.Element;
 
-export const AuthButton: TAuthButton = ({
+const AuthButton: TAuthButton = ({
   value,
   name,
   type,
@@ -38,3 +39,5 @@ export const AuthButton: TAuthButton = ({
     </Button>
   );
 };
+
+export default AuthButton;
