@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/entities/auth_form/utils/hooks/use_form.tsx"],
+  "include": ["src/app", "src/entities/auth_form/utils/hooks/use_form.tsx", "src/entities/auth_form/utils/hooks/use_submit.tsx", "src/app/routes/index.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
