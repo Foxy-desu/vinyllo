@@ -72,24 +72,6 @@ const useForm = () => {
     }
   };
 
-  // const handleSubmit: TSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
-  //     setSubmitError('');
-  //     const userCredentials = { ...values, albums:[], favorites:[]};
-  //     e.currentTarget.name === 'signUp' && dispatch(registerUser(userCredentials));
-  //     e.currentTarget.name === 'signIn' && dispatch(loginUser(userCredentials));
-  //     resetForm();
-  //   } else {
-  //     setSubmitError('Please fill all the fields correctly to continue');
-  //   }
-  // };
-
-  // const resetForm = () => {
-  //   setValues({});
-  //   setErrors({});
-  // };
-
   return {
     values,
     setValues,
@@ -98,7 +80,6 @@ const useForm = () => {
     setSubmitError,
     submitError,
     handleChange,
-    // handleSubmit,
   };
 };
 
