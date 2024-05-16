@@ -8,7 +8,6 @@ import { createUserObjOnLogin, createUserObjOnReg } from "../helpers/user_object
 import { loginUser, registerUser } from "../../../../app/store/user_slice";
 import { resetForm } from "../../api";
 import { TFormSetData } from "../../ui/auth_form";
-import { Navigate, useNavigate } from "react-router-dom";
 
 export type TUseSubmitProps = {errors: object, setErrors: TFormSetData, values: object, setValues: TFormSetData};
 
