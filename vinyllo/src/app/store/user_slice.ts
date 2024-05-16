@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//TODO: implement rtk query for user fetching data
+export type TUserState = {email:string, id:number} | null; 
 export const loginUser: any = createAsyncThunk(
     'login',
     async(userCredentials)=> {
         const request = await axios.post('http://localhost:3000/login', userCredentials);
         const response = await request.data;
         localStorage.setItem('userToken', response.accessToken);
-        localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('user', JSON.stringify({email: response.user.email, id: response.user.id}));
         return response;
     }
 );
@@ -17,7 +19,7 @@ export const registerUser: any = createAsyncThunk(
         const request = await axios.post('http://localhost:3000/register', userCredentials);
         const response = await request.data;
         localStorage.setItem('userToken', response.accessToken);
-        localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('user', JSON.stringify({email: response.user.email, id: response.user.id}));
         return response;
     }
 );
@@ -34,6 +36,9 @@ const userSlice = createSlice({
             if (state.user) {
                 state.user = null;
             }
+        },
+        setUserOnReload(state, action) {
+            state.user = action.payload;
         }
     },
     extraReducers: (builder)=>{
@@ -45,7 +50,7 @@ const userSlice = createSlice({
         })
         .addCase(loginUser.fulfilled, (state, action)=> {
             state.loading = false;
-            state.user = action.payload;
+            state.user = action.payload.user;
             state.error = null;
         })
         .addCase(loginUser.rejected, (state, action) => {
@@ -68,7 +73,7 @@ const userSlice = createSlice({
         })
         .addCase(registerUser.fulfilled, (state, action)=> {
             state.loading = false;
-            state.user = action.payload;
+            state.user = action.payload.user;
             state.error = null;
         })
         .addCase(registerUser.rejected, (state, action) => {
@@ -87,5 +92,5 @@ const userSlice = createSlice({
     }
 });
 
-export const {logOut} = userSlice.actions;
+export const {logOut, setUserOnReload} = userSlice.actions;
 export default userSlice.reducer;

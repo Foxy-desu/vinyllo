@@ -2,21 +2,18 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '../shared/api';
 import Layout from './layout/layout';
 import { LoginPage, MainPageContainer, Page404 } from '../pages/api';
-import { useEffect, useState } from 'react';
-import { TUser } from '../pages/main_page/model/mainPageContainer';
+import useGetUser from './utils/use_getUser/useGetUser';
 
+//TODO: add lazy loading
 function App() {
-  const [user, setUser] = useState<TUser | null>(()=>{
-    const storedUser = localStorage.getItem('user');
-    return storedUser? JSON.parse(storedUser) : null
-  });
+    const {user, setUser} = useGetUser();
 
   return (
     <BrowserRouter>
         <Routes>
         <Route element={
                 <ProtectedRoute user={user}>
-                    <Layout>
+                    <Layout user={user}>
                     </Layout>
                 </ProtectedRoute>
         }>
