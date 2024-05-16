@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //TODO: implement rtk query for user fetching data
-export type TUserState = {email:string, id:number} | null; 
+export type TUserState = {email:string, id:number} | null | undefined; 
 export const loginUser: any = createAsyncThunk(
     'login',
     async(userCredentials)=> {

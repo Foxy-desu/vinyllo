@@ -1,10 +1,9 @@
 import { Button, Container, Typography } from "@mui/material"
-import { TUser } from '../model/mainPageContainer';
+import { TSetUser} from '../model/mainPageContainer';
 import { useDispatch } from "react-redux";
-import { logOut } from '../../../app/store/user_slice';
+import { TUserState, logOut } from '../../../app/store/user_slice';
 
-export type TSetUser = React.Dispatch<React.SetStateAction<TUser | null>>;
-export type TMainPageProps = {user:TUser, setUser: TSetUser}
+export type TMainPageProps = {user:TUserState, setUser: TSetUser}
 const MainPage = ({user, setUser}: TMainPageProps) => {
     const dispatch = useDispatch();
     return (

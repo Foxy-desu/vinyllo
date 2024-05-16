@@ -1,7 +1,8 @@
 import { Box, Container, Typography } from "@mui/material"
 import { NavLink, Outlet } from "react-router-dom";
+import { TUserState } from "../store/user_slice";
 
-const Layout = ({user}: {user:string | null}) => {
+const Layout = ({user}: {user:TUserState | null}) => {
     
     return (
         <Container>

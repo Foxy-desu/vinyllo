@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { TUserState } from "../../../app/store/user_slice";
 import {MainPage} from "../../api";
-import { ProtectedRoute } from "../../../shared/api";
 
 export type TUser = {
     email: string;
     id: number;
 };
-export type TSetUser = React.Dispatch<React.SetStateAction<TUser | null>>;
-export type TMainPageProps = {user:TUser | null, setUser: TSetUser};
+export type TSetUser = React.Dispatch<React.SetStateAction<TUserState>>;
+export type TMainPageProps = {user:TUserState | null, setUser: TSetUser};
 
 const MainPageContainer = ({user, setUser}:TMainPageProps)=> {
     return user ? <MainPage user={user} setUser={setUser}/> : <></>

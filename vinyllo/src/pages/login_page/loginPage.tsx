@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {Box, Container, Typography} from "@mui/material";
 import { AuthForm } from "../../entities/auth_form/api";
 import { useNavigate } from "react-router-dom";
