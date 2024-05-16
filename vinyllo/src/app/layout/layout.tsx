@@ -1,9 +1,15 @@
-import { Box, Container, Link } from "@mui/material"
+import { Box, Container, Typography } from "@mui/material"
 import { NavLink, Outlet } from "react-router-dom";
 
-const Layout = () => {
+const Layout = ({user}: {user:string | null}) => {
+    
     return (
         <Container>
+            <Container component="header">
+                <Typography component="p">
+                    user: {user && user.email}
+                </Typography>
+            </Container>
             <Container component="main">
                  <Outlet/>
             </Container>
