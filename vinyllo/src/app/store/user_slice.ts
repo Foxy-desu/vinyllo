@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//TODO create reducer to remove data about user from store
 export const loginUser: any = createAsyncThunk(
     'login',
     async(userCredentials)=> {
@@ -11,8 +10,7 @@ export const loginUser: any = createAsyncThunk(
         localStorage.setItem('user', JSON.stringify(response.user));
         return response;
     }
-)
-
+);
 export const registerUser: any = createAsyncThunk(
     'register',
     async(userCredentials)=> {
@@ -22,7 +20,7 @@ export const registerUser: any = createAsyncThunk(
         localStorage.setItem('user', JSON.stringify(response.user));
         return response;
     }
-)
+);
 
 const userSlice = createSlice({
     name: 'user',
@@ -32,7 +30,11 @@ const userSlice = createSlice({
         error: null,
     },
     reducers: {
-
+        logOut(state) {
+            if (state.user) {
+                state.user = null;
+            }
+        }
     },
     extraReducers: (builder)=>{
         builder
@@ -85,4 +87,5 @@ const userSlice = createSlice({
     }
 });
 
+export const {logOut} = userSlice.actions;
 export default userSlice.reducer;
